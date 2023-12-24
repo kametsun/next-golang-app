@@ -14,8 +14,6 @@ services:
       - type: bind
         source: "./api"
         target: "/api"
-    depends_on:
-      - db
     
   frontend:
     build:
@@ -30,18 +28,20 @@ services:
       - WATCHPACK_POLLING=true
     command: sh -c "npm run dev"
   
-  db:
+  mysql:
     container_name: mysql
+    platform: linux/amd64
     build:
       context: ./db/
-    tty: true
     ports:
       - "3306:3306"
+    tty: true
     environment:
-      MYSQL_ROOT_PASSWORD: mysql
-      MYSQL_DATABASE: db
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mydb
       MYSQL_USER: user
       MYSQL_PASSWORD: password
+      TZ: "Asia/Tokyo"
     restart: always
     volumes:
       - type: volume
