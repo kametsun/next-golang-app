@@ -1,0 +1,52 @@
+version: "3.8"
+services:
+  backend:
+    container_name: api
+    build:
+      context: ./api/
+      Dockerfile: Dockerfile
+    tty: true
+    ports:
+      - "8080:8080"
+    env_file:
+      - ./mysql/.env
+    volumes:
+      - type: bind
+        source: "./api"
+        target: "/api"
+    depends_on:
+      - db
+    
+  frontend:
+    build:
+      context: ./frontend/
+      Dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - type: bind
+        source: "./frontend"
+        target: "/app"
+    environment:
+      - WATCHPACK_POLLING=true
+    command: sh -c "npm run dev"
+  
+  db:
+    container_name: mysql
+    build:
+      context: ./db/
+      Dockerfile: Dockerfile
+    tty: true
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql
+      MYSQL_DATABASE: db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    restart: always
+    volumes:
+      - type: volume
+        source: mysql_volume
+        target: /var/lib/mysql
+    
