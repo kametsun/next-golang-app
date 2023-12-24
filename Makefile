@@ -9,5 +9,5 @@ create-frontend:
 start-frontend:
 	docker compose up frontend --build
 
-mysql:
-	docker compose run mysql sh -c 'mysql -u user -ppassword'
+postgres:
+	docker compose run pgsql

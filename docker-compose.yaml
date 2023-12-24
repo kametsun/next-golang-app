@@ -8,8 +8,6 @@ services:
     tty: true
     ports:
       - "8080:8080"
-    env_file:
-      - ./db/.env
     volumes:
       - type: bind
         source: "./api"
