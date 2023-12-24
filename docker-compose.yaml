@@ -1,15 +1,14 @@
 version: "3.8"
 services:
-  backend:
+  api:
     container_name: api
     build:
       context: ./api/
-      Dockerfile: Dockerfile
     tty: true
     ports:
       - "8080:8080"
     env_file:
-      - ./mysql/.env
+      - ./db/.env
     volumes:
       - type: bind
         source: "./api"
@@ -20,7 +19,6 @@ services:
   frontend:
     build:
       context: ./frontend/
-      Dockerfile: Dockerfile
     ports:
       - "3000:3000"
     volumes:
@@ -35,7 +33,6 @@ services:
     container_name: mysql
     build:
       context: ./db/
-      Dockerfile: Dockerfile
     tty: true
     ports:
       - "3306:3306"
@@ -47,6 +44,8 @@ services:
     restart: always
     volumes:
       - type: volume
-        source: mysql_volume
+        source: db_store
         target: /var/lib/mysql
-    
+
+volumes:
+  db_store:

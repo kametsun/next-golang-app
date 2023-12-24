@@ -1,3 +1,0 @@
-$ docker compose run --rm app sh -c 'npx create-next-app . --typescript'
-
-$ docker compose up
