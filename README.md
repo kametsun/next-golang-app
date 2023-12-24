@@ -9,7 +9,9 @@ $ docker compose run api sh
 # go mod init [your project name]
 ```
 
-3. Add to the Dockerfile
+3. Create a golang project as you like. But main.go file is required
+
+4. Add to the Dockerfile
 ```
 # api/Dockerfile
 # base image
@@ -29,7 +31,7 @@ RUN go build -o main .
 CMD ["go", "run", "main.go"]
 ```
 
-4. Start up api server
+5. Start up api server
 ```
 $ docker compose up api --build
 ```
@@ -47,7 +49,16 @@ $ docker compose run frontend sh
 
 3. Create Next.js app
 ```
-# npx create-next-app@latest
+# npx create-next-app@latest .
+```
+
+If you get the following error
+```
+npm install has failed.
+```
+Execute the following command
+```
+# npm i
 ```
 
 4. Re-create Dockerfile
