@@ -27,26 +27,20 @@ services:
     environment:
       - WATCHPACK_POLLING=true
     command: sh -c "npm run dev"
-  
-  mysql:
-    container_name: mysql
-    platform: linux/amd64
+
+  pgsql:
+    container_name: ${CONTAINER_NAME}
     build:
       context: ./db/
+    hostname: ${HOSTNAME}
     ports:
-      - "3306:3306"
-    tty: true
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: mydb
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
-      TZ: "Asia/Tokyo"
+      - "5432:5432"
     restart: always
+    environment:
+      - POSTGRES_USER=${USER_NAME}
+      - POSTGRES_PASSWORD=${USER_PASS}
     volumes:
-      - type: volume
-        source: db_store
-        target: /var/lib/mysql
+      - db_store:/var/lib/postgresql/data
 
 volumes:
   db_store:

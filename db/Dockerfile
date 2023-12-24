@@ -1,2 +1,2 @@
 # ./db/Dockerfile
-FROM mysql:8.2.0
+FROM postgres:16.1
